@@ -1,5 +1,5 @@
-import { Ticket } from './../model/ticket.model';
-import { HELP_DESK_API } from './../services/helpdesk.api';
+import { Ticket } from '../model/ticket.model';
+import { HELP_DESK_API } from './helpdesk.api';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
