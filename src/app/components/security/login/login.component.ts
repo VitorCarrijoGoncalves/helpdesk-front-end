@@ -48,4 +48,13 @@ export class LoginComponent implements OnInit {
     window.location.href = '/login';
     window.location.reload();
   }
+
+  getFromGroupClass(isInvalid: boolean, isDirty) {
+    return {
+      'form-group': true,
+      'has-error': isInvalid && isDirty,
+      'has-success': !isInvalid && isDirty
+    };
+  }
+
 }
