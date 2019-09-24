@@ -1,4 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './components/security/auth.guard';
+import { AuthInterceptor } from './components/security/auth.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -13,6 +15,7 @@ import { LoginComponent } from './components/security/login/login.component';
 import { routes } from './app.route';
 import { SharedService } from './services/shared.service';
 import { FormsModule } from '@angular/forms';
+import { UserNewComponent } from './components/user-new/user-new.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     MenuComponent,
     FooterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    UserNewComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,17 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     routes
   ],
-  providers: [UserService, SharedService],
+  providers: [
+    UserService,
+    SharedService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
