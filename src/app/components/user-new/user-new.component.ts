@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class UserNewComponent implements OnInit {
 
   @ViewChild('form')
-  form: NgForm
+  form: NgForm;
 
   user = new User('', '', '', '');
   shared: SharedService;
@@ -78,7 +78,7 @@ export class UserNewComponent implements OnInit {
   private buildClasses(type: string): void {
     this.classCss = {
       'alert': true
-    }
+    };
 
     this.classCss['alert-' + type] = true;
   }
