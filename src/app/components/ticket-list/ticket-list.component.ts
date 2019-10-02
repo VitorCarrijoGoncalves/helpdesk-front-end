@@ -64,6 +64,65 @@ export class TicketListComponent implements OnInit {
     });
   }
 
+  cleanFilter(): void {
+    this.assignedToMe = false;
+    this.page = 0;
+    this.count = 5;
+    this.ticketFilter = new Ticket('', null, '', '', '', '', null, null, '', null);
+    this.findAll(this.page, this.count);
+  }
+
+  edit(id: string) {
+    this.router.navigate(['/ticket-new', id]);
+  }
+
+  detail(id: string) {
+    this.router.navigate(['/ticket-detail', id]);
+  }
+
+  delete(id: string) {
+    this.dialogService.confirm(' Do you want to delete the ticket ? ')
+    .then((candelete: boolean) => {
+      if (candelete) {
+        this.message = {};
+        this.ticketService.delete(id).subscribe((responseApi: ResponseApi) => {
+          this.showMessage({
+            type: 'success',
+            text: 'Record deleted'
+          });
+          this.findAll(this.page, this.count);
+        }, err => {
+          this.showMessage({
+            type: 'error',
+            text: err['error']['errors'][0]
+          });
+        });
+      }
+    });
+  }
+
+  setNextPage(event: any) {
+    event.preventDefault();
+    if (this.page + 1 < this.pages.length) {
+      this.page = this.page + 1;
+      this.findAll(this.page, this.count);
+    }
+  }
+
+  setPreviousPage(event: any) {
+    event.preventDefault();
+    if (this.page > 0) {
+      this.page = this.page - 1;
+      this.findAll(this.page, this.count);
+    }
+  }
+
+  setPage(i, event: any) {
+    event.preventDefault();
+    this.page = i;
+    this.findAll(this.page, this.count);
+  }
+
   private showMessage(message: {type: string, text: string}): void {
     this.message = message;
     this.buildClasses(message.type);

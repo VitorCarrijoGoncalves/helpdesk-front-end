@@ -91,7 +91,6 @@ export class UserListComponent implements OnInit {
     this.findAll(this.page, this.count);
   }
 
-
   private showMessage(message: {type: string, text: string}): void {
     this.message = message;
     this.buildClasses(message.type);
