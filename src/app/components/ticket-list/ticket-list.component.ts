@@ -1,4 +1,4 @@
-import { ResponseApi, ResponseApi } from './../../model/response-api';
+import { ResponseApi } from './../../model/response-api';
 import { Router } from '@angular/router';
 import { TicketService } from './../../services/ticket.service';
 import { DialogService } from './../../services/dialog.service';
@@ -13,13 +13,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketListComponent implements OnInit {
 
-  assignedToMe: boolean = false;
-  page: number = 0;
-  count: number = 5;
+  assignedToMe = false;
+  page = 0;
+  count = 5;
   pages: Array<number>;
   shared: SharedService;
-  message : {};
-  classCss : {};
+  message: {};
+  classCss: {};
   listTicket = [];
   ticketFilter = new Ticket('', null, '', '', '', '', null, null, '', null);
 
