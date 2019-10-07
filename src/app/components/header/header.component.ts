@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user.service';
+import { Router } from '@angular/router';
 import { SharedService } from './../../services/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user.model';
@@ -11,9 +13,10 @@ export class HeaderComponent implements OnInit {
 
   public shared: SharedService;
 
-  constructor() {
+  constructor(private userService: UserService,
+    private router: Router) {
     this.shared = SharedService.getInstance();
-    this.shared.user = new User('', '', '', '');
+    this.shared.user = new User('1', 'aaa@email.com', '123', 'CUSTOMER');
    }
 
   ngOnInit() {
