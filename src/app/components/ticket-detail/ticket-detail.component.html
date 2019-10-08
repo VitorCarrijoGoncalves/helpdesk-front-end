@@ -27,7 +27,7 @@
           </li>
           <li>
             <span><img [src]="ticket.image" width="450px" height="370px"></span>
-            <!-- <span class="pull-right">
+            <span class="pull-right">
               <table class="table table-bordered">
                 <tr>
                   <th>User Change</th>
@@ -35,12 +35,37 @@
                   <th>Status</th>
                 </tr>
                 <tr *ngFor="let change of ticket.changes">
-                  <td>{{ change }}</td>
+                  <td>{{ change?.userChange.email }}</td>
+                  <td>{{ change?.dateChangeStatus | date: 'dd/mm/yyyy HH:mm:ss' }}</td>
+                  <td>{{ change?.status }}</td>
                 </tr>
               </table>
-            </span> -->
+            </span>
           </li>
         </ul>
+      </div>
+      <div class="box-footer">
+        <button *ngIf="shared.user.profile == 'TECHNICIAN' && ticket.status == 'New'"
+        (click)="changeStatus('Assigned')"
+        class="btn btn-primary">Accept</button>
+
+        <button *ngIf="shared.user.profile == 'TECHNICIAN' && (ticket.status == 'Assigned'
+         || ticket.status == 'Disapproved')"
+            (click)="changeStatus('Resolved')"
+            class="btn btn-primary">Solve</button>
+
+        <button *ngIf="shared.user.profile == 'CUSTOMER' && ticket.status == 'Resolved'"
+               (click)="changeStatus('Approved')"
+               class="btn btn-primary">Approve</button>
+
+      <button *ngIf="shared.user.profile == 'CUSTOMER' && ticket.status == 'Resolved'"
+               (click)="changeStatus('Disapproved')"
+               class="btn btn-primary">Disapprove</button>
+
+      <button *ngIf="shared.user.profile == 'TECHNICIAN' && ticket.status == 'Approved'"
+               (click)="changeStatus('Closed')"
+               class="btn btn-primary">Close</button>
+        
       </div>
     </form>
   </div>
