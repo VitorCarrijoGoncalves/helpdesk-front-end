@@ -1,8 +1,9 @@
+import { NgForm } from '@angular/forms';
 import { ResponseApi } from './../../model/response-api';
 import { TicketService } from './../../services/ticket.service';
 import { SharedService } from './../../services/shared.service';
 import { Ticket } from './../../model/ticket.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,20 +13,23 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TicketDetailComponent implements OnInit {
 
+  @ViewChild('form')
+  form: NgForm;
+
   ticket = new Ticket('', 0, '', '', '', '', null, null, '', null);
   shared: SharedService;
   message: {};
   classCss: {};
 
-  constructor() {
+  constructor(
     private ticketService: TicketService,
     private route: ActivatedRoute
-   } {
-     this.shared = SharedService.getInstance();
+  ) {
+    this.shared = SharedService.getInstance();
    }
 
   ngOnInit() {
-    let id: string = this.route.snapshot.params['id'];
+    const id: string = this.route.snapshot.params['id'];
     if (id !== undefined) {
       this.findById(id);
     }
@@ -44,7 +48,7 @@ export class TicketDetailComponent implements OnInit {
 
   changeStatus(status: string): void {
     this.ticketService.changeStatus(status, this.ticket).subscribe((responseApi: ResponseApi) => {
-      this.ticket = responseApi.data
+      this.ticket = responseApi.data;
       this.ticket.date = new Date(this.ticket.date).toISOString();
       this.showMessage({
         type: 'success',
