@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.shared.user.profile = this.shared.user.profile.substring(5);
       this.shared.showTemplate.emit(true);
       this.router.navigate(['/']); // depois de logado é enviado para a tela principal do sistema
-    }, error => {
+    }, err => {
       this.shared.token = null;
       this.shared.user = null;
       this.shared.showTemplate.emit(false);
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     window.location.reload();
   }
 
-  getFromGroupClass(isInvalid: boolean, isDirty) {
+  getFromGroupClass(isInvalid: boolean, isDirty: boolean) {
     return {
       'form-group': true,
       'has-error': isInvalid && isDirty,
